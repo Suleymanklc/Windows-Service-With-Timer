@@ -14,7 +14,7 @@ namespace deneme
         public ProjectInstaller()
         {
             InitializeComponent();
-            this.serviceInstaller1.ServiceName = "suleyman";
+            this.serviceInstaller1.ServiceName = "LogDeleter";
         }
 
         private void serviceProcessInstaller1_AfterInstall(object sender, InstallEventArgs e)
