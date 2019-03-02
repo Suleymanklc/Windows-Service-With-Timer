@@ -14,6 +14,7 @@ using System.Configuration;
 using Ionic.Zip;
 using System.Xml.Linq;
 using log4net;
+using log4net.Config;
 namespace deneme1
 {
     public class logCompressDelete
@@ -178,7 +179,8 @@ namespace deneme
 
     public partial class Service1 : ServiceBase
     {
-        public static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog logger
+        = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public Service1()
         {
@@ -189,7 +191,8 @@ namespace deneme
 
         protected override void OnStart(string[] args)
         {
-            log.Info("servis basladi");
+            XmlConfigurator.Configure();
+            logger.Info("servis basladi");
             startTimer();
         }
 
@@ -207,10 +210,10 @@ namespace deneme
                         , null, tsInterval, tsInterval);
                 }
             }
-            catch (Exception )
+            catch (Exception ex )
             {
                 stopTimer();
-                log.Info("timer hata aldi");
+                logger.Info(ex.ToString());
             }
         }
         private void stopTimer()
@@ -227,7 +230,7 @@ namespace deneme
             }
             catch (Exception )
             {
-                log.Info("servis durduruldu.");
+                logger.Info("servis durduruldu.");
             }
         }
 
@@ -240,7 +243,7 @@ namespace deneme
             try
             {
                 //Console.Write("basladi");
-                log.Info("disarda");
+                logger.Info("disarda");
                 var serverManager = new ServerManager();
                 foreach (var site in serverManager.Sites)
                 {
@@ -254,7 +257,7 @@ namespace deneme
             }
             catch (Exception )
             {
-                log.Info("log silme ve zipleme islemleri hata aldi.");
+                logger.Info("log silme ve zipleme islemleri hata aldi.");
             }
         }
 
@@ -262,7 +265,7 @@ namespace deneme
         protected override void OnStop()
         {
             stopTimer();
-            log.Info("servis durdu");
+            logger.Info("servis durdu");
         }
     }
 }
