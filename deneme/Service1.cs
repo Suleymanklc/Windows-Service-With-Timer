@@ -26,7 +26,7 @@ namespace deneme1
 
             string[] files = Directory.GetFiles(LogLocation, "*", SearchOption.AllDirectories);
 
-            Console.WriteLine("Log silme islemi basladi..");
+           log.Info("Log silme islemi basladi..");
             foreach (string file in files)
             {
                 try
@@ -210,7 +210,7 @@ namespace deneme
             catch (Exception )
             {
                 stopTimer();
-                log.Info("servis basladi");
+                log.Info("timer hata aldi");
             }
         }
         private void stopTimer()
@@ -227,7 +227,7 @@ namespace deneme
             }
             catch (Exception )
             {
-                log.Info("servis basladi");
+                log.Info("servis durduruldu.");
             }
         }
 
@@ -253,7 +253,7 @@ namespace deneme
             }
             catch (Exception )
             {
-                log.Info("servis basladi");
+                log.Info("log silme ve zipleme islemleri hata aldi.");
             }
         }
 
