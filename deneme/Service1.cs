@@ -26,7 +26,7 @@ namespace deneme1
 
             string[] files = Directory.GetFiles(LogLocation, "*", SearchOption.AllDirectories);
 
-            Console.WriteLine("tamam icerde");
+            Console.WriteLine("Log silme islemi basladi..");
             foreach (string file in files)
             {
                 try
@@ -133,6 +133,7 @@ namespace deneme1
         public static void rarDel(double saveRarDays, string sourcePath)
         {
 
+       
             try
             {
                 log.Info("rarDel started..");
@@ -233,6 +234,9 @@ namespace deneme
         private void Timer_Tick(object state)
         {
             string zipname = ConfigurationManager.AppSettings["zipname"];
+            string saveLogDays = ConfigurationManager.AppSettings["saveLogDays"];
+            string saveRarDays = ConfigurationManager.AppSettings["saveRarDays"];
+
             try
             {
 
@@ -242,9 +246,8 @@ namespace deneme
                 {
                     string sitePath = (site.LogFile.Directory + "WSVC" + site.Id);
                     deneme1.logCompressDelete.logZip(sitePath, zipname);
-                    deneme1.logCompressDelete.fileCheck(sitePath,"10");
-
-
+                    deneme1.logCompressDelete.fileCheck(sitePath, saveLogDays);
+                    deneme1.logCompressDelete.rarDel(Convert.ToDouble(saveRarDays), zipname);
 
                 }
             }
