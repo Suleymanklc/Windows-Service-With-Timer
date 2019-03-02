@@ -7,6 +7,7 @@ using Ionic.Zip;
 using System.Xml.Linq;
 using log4net;
 
+
 namespace deneme
 {
     public class logCompressDelete 
