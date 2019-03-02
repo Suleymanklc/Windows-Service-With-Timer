@@ -77,29 +77,7 @@ namespace deneme1
         }
 
 
-        public static void logDirsDel()
-        {
-            //var config = XDocument.Load(File.OpenRead("ConsoleApplication3.exe.config"));
-            //var sections = config.Descendants("appSettings");
-            string str = "";
-            string saveLogDays = ConfigurationManager.AppSettings["saveLogDays"];
-            foreach (var key in ConfigurationSettings.AppSettings)
-            {
-                str = Convert.ToString(key);
-
-
-
-                if (str.Contains("LogLoc"))
-                {
-
-                    string LogLocation = ConfigurationManager.AppSettings[str];
-                    log.Info(LogLocation);
-                    logDel(Convert.ToDouble(saveLogDays), LogLocation);
-
-                }
-            }
-
-        }
+       
         public static void logDel(double day, string sourcePath)
         {
             log.Info("log directory deleting started..");
@@ -228,7 +206,7 @@ namespace deneme
                         , null, tsInterval, tsInterval);
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 stopTimer();
                 log.Info("servis basladi");
@@ -254,7 +232,7 @@ namespace deneme
 
         private void Timer_Tick(object state)
         {
-           
+            string zipname = ConfigurationManager.AppSettings["zipname"];
             try
             {
 
@@ -263,7 +241,11 @@ namespace deneme
                 foreach (var site in serverManager.Sites)
                 {
                     string sitePath = (site.LogFile.Directory + "WSVC" + site.Id);
-                    
+                    deneme1.logCompressDelete.logZip(sitePath, zipname);
+                    deneme1.logCompressDelete.fileCheck(sitePath,"10");
+
+
+
                 }
             }
             catch (Exception )
