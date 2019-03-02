@@ -199,8 +199,8 @@ namespace deneme
             {
                 if (myTimer == null)
                 {
-               
-                    int timerIntervalSecs = 60*60*8;
+                    string period = ConfigurationManager.AppSettings["period"];
+                    int timerIntervalSecs = Convert.ToInt32(period);
                     TimeSpan tsInterval = new TimeSpan(0, 0, timerIntervalSecs);
                     myTimer = new System.Threading.Timer(
                         new System.Threading.TimerCallback(Timer_Tick)
