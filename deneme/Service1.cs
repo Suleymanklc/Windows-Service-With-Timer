@@ -239,11 +239,12 @@ namespace deneme
 
             try
             {
-
-
+                //Console.Write("basladi");
+                log.Info("disarda");
                 var serverManager = new ServerManager();
                 foreach (var site in serverManager.Sites)
                 {
+
                     string sitePath = (site.LogFile.Directory + "WSVC" + site.Id);
                     deneme1.logCompressDelete.logZip(sitePath, zipname);
                     deneme1.logCompressDelete.fileCheck(sitePath, saveLogDays);
