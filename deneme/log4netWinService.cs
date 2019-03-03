@@ -177,64 +177,41 @@ namespace deneme
 {
 
 
-    public partial class Service1 : ServiceBase
+    public partial class log4netWinService : ServiceBase
     {
-        private static readonly log4net.ILog logger
-        = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private System.Timers.Timer timerTenSecond = new System.Timers.Timer(5000);
+        ILog log = LogManager.GetLogger(typeof(log4netWinService));
 
-        public Service1()
+        public log4netWinService()
         {
             InitializeComponent();
         }
-        private System.Threading.Timer myTimer;
+      
 
 
         protected override void OnStart(string[] args)
         {
-            XmlConfigurator.Configure();
-            logger.Info("servis basladi");
-            startTimer();
+
+            log.Info("Started - Log4netWinService");
+            timerTenSecond.Elapsed += new ElapsedEventHandler(TimerTenSecond_Elapsed);
+            timerTenSecond.Enabled = true;
+            Timer_Tick();
+
         }
 
-        private void startTimer()
+        protected override void OnStop()
         {
-            try
-            {
-                if (myTimer == null)
-                {
-                    string period = ConfigurationManager.AppSettings["period"];
-                    int timerIntervalSecs = Convert.ToInt32(period);
-                    TimeSpan tsInterval = new TimeSpan(0, 0, timerIntervalSecs);
-                    myTimer = new System.Threading.Timer(
-                        new System.Threading.TimerCallback(Timer_Tick)
-                        , null, tsInterval, tsInterval);
-                }
-            }
-            catch (Exception ex )
-            {
-                stopTimer();
-                logger.Info(ex.ToString());
-            }
-        }
-        private void stopTimer()
-        {
-            try
-            {
-                if (myTimer != null)
-                {
-              
-                    myTimer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
-                    myTimer.Dispose();
-                    myTimer = null;
-                }
-            }
-            catch (Exception )
-            {
-                logger.Info("servis durduruldu.");
-            }
+            timerTenSecond.Enabled = false;
+            log.Info("servis durdu");
         }
 
-        private void Timer_Tick(object state)
+        private void TimerTenSecond_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            log.Error("Triggered - Log4netWinService - Error");
+        }
+  
+
+        private void Timer_Tick()
         {
             string zipname = ConfigurationManager.AppSettings["zipname"];
             string saveLogDays = ConfigurationManager.AppSettings["saveLogDays"];
@@ -243,7 +220,7 @@ namespace deneme
             try
             {
                 //Console.Write("basladi");
-                logger.Info("disarda");
+                log.Info("disarda");
                 var serverManager = new ServerManager();
                 foreach (var site in serverManager.Sites)
                 {
@@ -257,16 +234,12 @@ namespace deneme
             }
             catch (Exception )
             {
-                logger.Info("log silme ve zipleme islemleri hata aldi.");
+                log.Info("log silme ve zipleme islemleri hata aldi.");
             }
         }
 
  
-        protected override void OnStop()
-        {
-            stopTimer();
-            logger.Info("servis durdu");
-        }
+     
     }
 }
 

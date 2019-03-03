@@ -1,6 +1,6 @@
 ﻿namespace deneme
 {
-    partial class Service1
+    partial class log4netWinService
     {
         /// <summary> 
         /// Required designer variable.
