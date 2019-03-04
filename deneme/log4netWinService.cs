@@ -178,13 +178,13 @@ namespace deneme
 
     public partial class log4netWinService : ServiceBase
     {
-        static double periodsec = 120000;
+        //static double periodsec = 120000;
         //double periodsec2 = periodsec;
         //periodsec2 =  Convert.ToDouble(period); wef
 
-        private System.Timers.Timer timerTenSecond = new System.Timers.Timer(periodsec);
+        //private System.Timers.Timer timerTenSecond = new System.Timers.Timer(periodsec);
         
-        static string period = ConfigurationManager.AppSettings["period"];
+        //static string period = ConfigurationManager.AppSettings["period"];
          
         ILog log = LogManager.GetLogger(typeof(log4netWinService));
 
@@ -199,15 +199,15 @@ namespace deneme
         {
 
             log.Info("Started - Log4netWinService");
-            timerTenSecond.Elapsed += new ElapsedEventHandler(TimerTenSecond_Elapsed);
-            timerTenSecond.Enabled = true;
+            //timerTenSecond.Elapsed += new ElapsedEventHandler(TimerTenSecond_Elapsed);
+            //timerTenSecond.Enabled = true;
             
 
         }
 
         protected override void OnStop()
         {
-            timerTenSecond.Enabled = false;
+            //timerTenSecond.Enabled = false;
             log.Info("servis durdu");
         }
 
