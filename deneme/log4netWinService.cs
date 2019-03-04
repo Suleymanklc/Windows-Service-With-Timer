@@ -182,7 +182,7 @@ namespace deneme
         //double periodsec2 = periodsec;
         //periodsec2 =  Convert.ToDouble(period); wef
 
-        //private System.Timers.Timer timerTenSecond = new System.Timers.Timer(periodsec);
+        //private System.Timers.Timer timerTenSecond = new System.Timers.Timer(periodsec); 
         
         //static string period = ConfigurationManager.AppSettings["period"];
          
