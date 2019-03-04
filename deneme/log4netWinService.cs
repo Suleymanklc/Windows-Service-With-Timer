@@ -178,7 +178,7 @@ namespace deneme
 
     public partial class log4netWinService : ServiceBase
     {
-        static double periodsec = 60000;
+        static double periodsec = 120000;
         //double periodsec2 = periodsec;
         //periodsec2 =  Convert.ToDouble(period);
 
