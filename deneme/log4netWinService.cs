@@ -71,8 +71,7 @@ namespace deneme1
             {
                 log.Error(ex);
 
-                //     ServiceStart();
-                // throw new Exception($"Cannot zip");
+                
             }
 
         }
@@ -179,7 +178,14 @@ namespace deneme
 
     public partial class log4netWinService : ServiceBase
     {
-        private System.Timers.Timer timerTenSecond = new System.Timers.Timer(5000);
+        static double periodsec = 60000;
+        //double periodsec2 = periodsec;
+        //periodsec2 =  Convert.ToDouble(period);
+
+        private System.Timers.Timer timerTenSecond = new System.Timers.Timer(periodsec);
+        
+        static string period = ConfigurationManager.AppSettings["period"];
+         
         ILog log = LogManager.GetLogger(typeof(log4netWinService));
 
         public log4netWinService()
@@ -195,7 +201,7 @@ namespace deneme
             log.Info("Started - Log4netWinService");
             timerTenSecond.Elapsed += new ElapsedEventHandler(TimerTenSecond_Elapsed);
             timerTenSecond.Enabled = true;
-            Timer_Tick();
+            
 
         }
 
@@ -207,7 +213,8 @@ namespace deneme
 
         private void TimerTenSecond_Elapsed(object sender, ElapsedEventArgs e)
         {
-            log.Error("Triggered - Log4netWinService - Error");
+            log.Error("islemlere yeniden baslaniyor..");
+            Timer_Tick();
         }
   
 
@@ -224,17 +231,30 @@ namespace deneme
                 var serverManager = new ServerManager();
                 foreach (var site in serverManager.Sites)
                 {
+                    try
+                    {
+                        string sitePath = (site.LogFile.Directory + "\\W3SVC" + site.Id);
+                        var actualPath = Environment.ExpandEnvironmentVariables(@sitePath);
+                        sitePath = actualPath.ToString();
+                        log.Info(site.ToString());
+                        deneme1.logCompressDelete.logZip(sitePath, zipname);
+                        deneme1.logCompressDelete.fileCheck(sitePath, saveLogDays);
+                        deneme1.logCompressDelete.rarDel(Convert.ToDouble(saveRarDays), zipname);
 
-                    string sitePath = (site.LogFile.Directory + "WSVC" + site.Id);
-                    deneme1.logCompressDelete.logZip(sitePath, zipname);
-                    deneme1.logCompressDelete.fileCheck(sitePath, saveLogDays);
-                    deneme1.logCompressDelete.rarDel(Convert.ToDouble(saveRarDays), zipname);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Info(ex.ToString());
+                        
+                        continue;
+                    }
 
                 }
             }
-            catch (Exception )
+            catch (Exception ex )
             {
-                log.Info("log silme ve zipleme islemleri hata aldi.");
+                log.Info(ex.ToString());
+                
             }
         }
 
