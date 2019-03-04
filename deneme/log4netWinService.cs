@@ -180,7 +180,7 @@ namespace deneme
     {
         static double periodsec = 120000;
         //double periodsec2 = periodsec;
-        //periodsec2 =  Convert.ToDouble(period);
+        //periodsec2 =  Convert.ToDouble(period); wef
 
         private System.Timers.Timer timerTenSecond = new System.Timers.Timer(periodsec);
         
