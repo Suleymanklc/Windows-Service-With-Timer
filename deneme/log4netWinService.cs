@@ -201,7 +201,7 @@ namespace deneme
             log.Info("Started - Log4netWinService");
             //timerTenSecond.Elapsed += new ElapsedEventHandler(TimerTenSecond_Elapsed);
             //timerTenSecond.Enabled = true;
-            
+            Timer_Tick();
 
         }
 
@@ -221,6 +221,7 @@ namespace deneme
         private void Timer_Tick()
         {
             string zipname = ConfigurationManager.AppSettings["zipname"];
+            string zippath = ConfigurationManager.AppSettings["zippath"];
             string saveLogDays = ConfigurationManager.AppSettings["saveLogDays"];
             string saveRarDays = ConfigurationManager.AppSettings["saveRarDays"];
 
@@ -239,7 +240,7 @@ namespace deneme
                         log.Info(site.ToString());
                         deneme1.logCompressDelete.logZip(sitePath, zipname);
                         deneme1.logCompressDelete.fileCheck(sitePath, saveLogDays);
-                        deneme1.logCompressDelete.rarDel(Convert.ToDouble(saveRarDays), zipname);
+                        deneme1.logCompressDelete.rarDel(Convert.ToDouble(saveRarDays), zippath);
 
                     }
                     catch (Exception ex)
